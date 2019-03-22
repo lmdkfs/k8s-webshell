@@ -1,0 +1,4 @@
+{"file":"/Users/finup/GoglandProjects/src/k8s-webshell/pkg/common/common.go:37","func":"k8s-webshell/pkg/common.GetRestConf","level":"info","msg":"kubeconfig file ","time":"2019-03-22T14:07:48+08:00"}
+{"file":"/Users/finup/GoglandProjects/src/k8s-webshell/pkg/api/controller.go:29","func":"k8s-webshell/pkg/api.init.0","level":"panic","msg":"init k8s client erropen : no such file or directory","time":"2019-03-22T14:07:48+08:00"}
+{"file":"/Users/finup/GoglandProjects/src/k8s-webshell/pkg/common/common.go:37","func":"k8s-webshell/pkg/common.GetRestConf","level":"info","msg":"kubeconfig file ","time":"2019-03-22T14:09:10+08:00"}
+{"file":"/Users/finup/GoglandProjects/src/k8s-webshell/pkg/api/controller.go:29","func":"k8s-webshell/pkg/api.init.0","level":"panic","msg":"init k8s client erropen : no such file or directory","time":"2019-03-22T14:09:10+08:00"}
