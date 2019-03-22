@@ -37,9 +37,9 @@ func init() {
 	if !exist {
 		err := os.MkdirAll(setting.LogPath, 0755)
 		if err != nil {
-			logrus.Errorf("mkdirs faild![%v]\n", err)
+			logrus.Errorf("MkDirs Failed![%v]\n", err)
 		} else {
-			logrus.Error("mkdirs success!\n")
+			logrus.Info("MkDirs Success!\n")
 		}
 
 	}
