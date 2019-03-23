@@ -1,0 +1,44 @@
+version: "3"
+services:
+  go-build:
+    image: golang:1.12-alpine 
+    environment:
+      - GOBIN=/go/bin
+      - GOOS=linux
+      - GOARCH=amd64
+
+    volumes:
+      - ./cmd:/go/src/k8s-webshell/cmd
+      - ./configs:/go/src/k8s-webshell/configs
+      - ./pkg:/go/src/k8s-webshell/pkg
+      - ./routers:/go/src/k8s-webshell/routers
+      - ./vendor:/go/src/k8s-webshell/vendor
+      - ./bin:/go/bin
+    command: ["go", "install", "-v", "/go/src/k8s-webshell/cmd/k8s-webshell.go"]
+
+  k8s-webshell:
+    build: 
+      context: .
+      #dockerfile: Dockerfile
+    
+    ports:
+      - "7777:7777"
+    environment:
+      - WEBSHELL_SERVER_RUN_MODE=debug
+      - WEBSHELL_SERVER_LOGPATH=/var/logs
+      - WEBSHELL_SERVER_LOGNAME=webshell.log
+      - WEBSHELL_SERVER_PORT=7777
+      - WEBSHELL_SERVER_KUBECONFIG=/data/admin.conf
+    volumes:
+      - ./configs/admin.conf:/data/admin.conf
+        #- ./configs/devconfig.yaml:/data/devconfig.yaml
+        #- ./configs/config.yaml:/data/config.yaml
+    command: ["./k8s-webshell"]    
+
+
+
+            
+
+        
+      
+              
