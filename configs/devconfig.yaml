@@ -3,6 +3,6 @@ server:
   run_mode: debug
   logpath: /tmp/k8s-webshell
   logname: webshell.log
-  kubeconfig: /Users/finup/GoglandProjects/src/k8s-webshell/configs/admin.conf
+  kubeconfig: /data/admin.conf
 
 
