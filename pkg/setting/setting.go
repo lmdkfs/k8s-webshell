@@ -14,6 +14,9 @@ var (
 	LogName string
 
 	KubeConfig string
+	InCluster bool
+
+
 )
 
 type Config struct {
@@ -73,5 +76,6 @@ func (config *Config) LoadServer() {
 	LogPath = config.vp.GetString("server.logpath")
 	LogName = config.vp.GetString("server.logname")
 	KubeConfig = config.vp.GetString("server.kubeconfig")
+	InCluster = config.vp.GetBool("server.incluster")
 
 }

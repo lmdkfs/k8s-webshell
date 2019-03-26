@@ -119,7 +119,7 @@ func WsHandler(c *gin.Context) {
 	utils.Logger.Info("get kwargs  **")
 	// 得到websocket 长连接
 	if wsConn, err = ws.InitWebsocket(c.Writer, c.Request); err != nil {
-		utils.Logger.Info("up to ws error >>>.")
+		utils.Logger.Info("up to ws error:", err)
 		return
 	}
 
@@ -129,6 +129,7 @@ func WsHandler(c *gin.Context) {
 
 	// 获取k8s rest client 配置
 	if restConf, err = common.GetRestConf(); err != nil {
+		fmt.Println("get kubeconfig error", err)
 		utils.Logger.Info("get kubeconfig error ", err)
 		goto END
 	}
@@ -146,7 +147,7 @@ func WsHandler(c *gin.Context) {
 			Stderr:    true,
 			TTY:       true,
 		}, scheme.ParameterCodec)
-	utils.Logger.Info("end k8s post")
+	//utils.Logger.Info("end k8s post")
 	// 创建到容器的连接
 	if executor, err = remotecommand.NewSPDYExecutor(restConf, "POST", sshReq.URL()); err != nil {
 		goto END
