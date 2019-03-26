@@ -20,19 +20,18 @@ services:
     build: 
       context: .
       #dockerfile: Dockerfile
-    
+    image: harbor.finupgroup.com/galaxy/k8s-webshell:v1 
     ports:
-      - "7777:7777"
+      - "30001:7777"
     environment:
       - WEBSHELL_SERVER_RUN_MODE=debug
       - WEBSHELL_SERVER_LOGPATH=/var/logs
       - WEBSHELL_SERVER_LOGNAME=webshell.log
       - WEBSHELL_SERVER_PORT=7777
       - WEBSHELL_SERVER_KUBECONFIG=/data/admin.conf
+      - WEBSHELL_SERVER_INCLUSTER=false
     volumes:
       - ./configs/admin.conf:/data/admin.conf
-        #- ./configs/devconfig.yaml:/data/devconfig.yaml
-        #- ./configs/config.yaml:/data/config.yaml
     command: ["./k8s-webshell"]    
 
 

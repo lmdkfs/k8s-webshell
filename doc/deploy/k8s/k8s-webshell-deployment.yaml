@@ -1,0 +1,34 @@
+kind: Deployment
+metadata:
+  name: k8s-webshell
+  namespace:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-webshell
+  template:
+    metadata:
+      labels:
+        app: k8s-webshell
+    spec:
+      serviceAccountName: k8s-webshell
+      automountServiceAccountToken: true
+      containers:
+        - name: k8s-webshell
+          image: harbor.finupgroup.com/galaxy/k8s-webshell:v1
+          imagePullPolicy: Always
+          env:
+            - name: WEBSHELL_SERVER_RUN_MODE
+              value: "debug"
+            - name: WEBSHELL_SERVER_LOGPATH
+              value: "/var/app/log"
+            - name: WEBSHELL_SERVER_LOGNAME
+              value: "webshell.log"
+            - name: WEBSHELL_SERVER_PORT
+              value: "7777"
+            - name: WEBSHELL_SERVER_INCLUSTER
+              value: "true"
+
+          ports:
+            - containerPort: 7777

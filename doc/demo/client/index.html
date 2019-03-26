@@ -38,7 +38,7 @@
         var podName = document.getElementById("podName").value
         var containerName = document.getElementById("containerName").value
         // 连接websocket
-        ws = new WebSocket("ws://127.0.0.1:7777/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName );
+        ws = new WebSocket("ws://10.10.152.39:30001/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName );
         ws.onopen = function(event) {
             console.log("onopen")
         }

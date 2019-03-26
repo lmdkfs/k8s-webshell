@@ -1,0 +1,13 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: k8s-webshell
+roleRef:
+  kind: ClusterRole
+  name: k8s-webshell
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    name: k8s-webshell
+    namespace: production-k8s-webshell  # 根据自己的情况进行修改
