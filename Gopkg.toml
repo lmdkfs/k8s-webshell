@@ -72,3 +72,7 @@
 [[constraint]]
   name = "github.com/spf13/cobra"
   version = "0.0.3"
+
+[[constraint]]
+  name = "github.com/dgrijalva/jwt-go"
+  version = "3.2.0"
