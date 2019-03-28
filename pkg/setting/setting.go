@@ -15,7 +15,8 @@ var (
 
 	KubeConfig string
 	InCluster bool
-
+	SslCertificate string
+	SslCertificateKey string
 
 )
 
@@ -77,5 +78,7 @@ func (config *Config) LoadServer() {
 	LogName = config.vp.GetString("server.logname")
 	KubeConfig = config.vp.GetString("server.kubeconfig")
 	InCluster = config.vp.GetBool("server.incluster")
+	SslCertificate = config.vp.GetString("server.ssl_certificate")
+	SslCertificateKey = config.vp.GetString("server.ssl_certificate_key")
 
 }
