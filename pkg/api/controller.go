@@ -112,9 +112,13 @@ func WsHandler(c *gin.Context) {
 
 	// 解析GET 参数
 
-	podNs = c.Query("podNs")
-	podName = c.Query("podName")
-	containerName = c.Query("containerName")
+	//podNs = c.Query("podNs")
+	//podName = c.Query("podName")
+	//containerName = c.Query("containerName")
+	podNs = c.MustGet("podNs").(string)
+	podName = c.MustGet("podName").(string)
+	containerName = c.MustGet("containerName").(string)
+	fmt.Println(">>>>>", podNs, podName, containerName)
 
 	utils.Logger.Info("get kwargs  **")
 	// 得到websocket 长连接
@@ -152,7 +156,7 @@ func WsHandler(c *gin.Context) {
 	if executor, err = remotecommand.NewSPDYExecutor(restConf, "POST", sshReq.URL()); err != nil {
 		goto END
 	}
-
+	wsConn.WsRead()
 	// 配置与容器之间的数据流处理回调
 	handler = &streamHandler{wsConn: wsConn, resizeEvent: make(chan remotecommand.TerminalSize)}
 	if err = executor.Stream(remotecommand.StreamOptions{

@@ -38,10 +38,10 @@
         var podName = document.getElementById("podName").value
         var containerName = document.getElementById("containerName").value
         // 连接websocket
-        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName + "&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMTgxMjUsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.Dss1g9ZMflB_x0vkaK9GhRHYSZf2xek9VpfUeZaThL");
-        // ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws");
+        // ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName + "&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMTgxMjUsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.Dss1g9ZMflB_x0vkaK9GhRHYSZf2xek9VpfUeZaThL");
+        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJwb2ROcyI6InJpY2hpZSIsInBvZE5hbWUiOiJteS1uZ2lueC1mOTk5NWJkYjYtanRyNWsiLCJjb250YWluZXJOYW1lIjoibXktbmdpbngiLCJleHAiOjE1NTQxMjg1MDMsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.TDVjldy9P9XY_3BbSWGfHdHpDipSMblTqZ7LCcsDM-U");
         ws.onopen = function(event) {
-            // ws.send(JSON.stringify({podNs:'', podName:'', containerName:'', token:''}))
+            // ws.send(JSON.stringify({'podNs':podNs, 'podName':podName, 'containerName':containerName, 'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMjI2MjQsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.93CNsR7QeifmnV-MmPOYqp9n1jNaceLfyWujDSSFdMM'}))
             console.log("onopen")
         }
         ws.onclose = function(event) {

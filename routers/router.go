@@ -23,6 +23,7 @@ func InitRouter() *gin.Engine {
 	{
 
 		apiV1.GET("/ws", api.WsHandler)
+		apiV1.POST("/ws", api.WsHandler)
 
 	}
 

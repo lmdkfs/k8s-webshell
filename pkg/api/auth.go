@@ -17,12 +17,14 @@ type auth struct {
 func GetAuth(c *gin.Context) {
 	username := c.Query("username")
 	password := c.Query("password")
-
+	podNs := c.Query("podNs")
+	podName := c.Query("podName")
+	containerName := c.Query("containerName")
 	data := make(map[string]interface{})
 	code := e.INVALID_PARAMS
 
 	if username == setting.UserName && password == setting.PassWord {
-		token, err := utils.GenerateToken(username, password)
+		token, err := utils.GenerateToken(username, password, podNs, podName, containerName)
 		if err != nil {
 			code = e.ERROR_AUTH_TOKEN
 		} else {
