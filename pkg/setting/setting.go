@@ -1,9 +1,10 @@
 package setting
 
 import (
-	"github.com/spf13/viper"
 	"os"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 var (
@@ -13,22 +14,23 @@ var (
 	LogPath string
 	LogName string
 
-	KubeConfig string
-	InCluster bool
-	SslCertificate string
+	KubeConfig        string
+	InCluster         bool
+	SslCertificate    string
 	SslCertificateKey string
+	JwtSecret         string
 
+	UserName string
+	PassWord string
 )
 
 type Config struct {
 	vp *viper.Viper
 }
 
-
 type Configer interface {
 	LoadConfig() error
 	LoadServer()
-
 }
 
 func LoadBaseConfig(conf Configer) {
@@ -45,7 +47,7 @@ func init() {
 func (config *Config) LoadConfig() error {
 	config.vp = viper.New()
 	// load config from env prefix harbortools
-	config.vp.SetEnvPrefix("webshell")                      // 环境变量前缀,环境变量必须大写.
+	config.vp.SetEnvPrefix("webshell")                         // 环境变量前缀,环境变量必须大写.
 	config.vp.SetEnvKeyReplacer(strings.NewReplacer(".", "_")) // 为了兼容读取yaml文件
 	config.vp.AutomaticEnv()
 
@@ -80,5 +82,8 @@ func (config *Config) LoadServer() {
 	InCluster = config.vp.GetBool("server.incluster")
 	SslCertificate = config.vp.GetString("server.ssl_certificate")
 	SslCertificateKey = config.vp.GetString("server.ssl_certificate_key")
+	JwtSecret = config.vp.GetString("server.jwt_secret")
+	UserName = config.vp.GetString("server.username")
+	PassWord = config.vp.GetString("server.password")
 
 }
