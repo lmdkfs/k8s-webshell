@@ -13,6 +13,7 @@ services:
       - ./configs/inside_finup.crt:/go/src/k8s-webshell/configs/inside_finup.crt
       - ./configs/inside_finup.key:/go/src/k8s-webshell/configs/inside_finup.key
       - ./pkg:/go/src/k8s-webshell/pkg
+      - ./middleware:/go/src/k8s-webshell/middleware
       - ./routers:/go/src/k8s-webshell/routers
       - ./vendor:/go/src/k8s-webshell/vendor
       - ./bin:/go/bin
