@@ -8,5 +8,4 @@ server:
   ssl_certificate: /Users/finup/GoglandProjects/src/k8s-webshell/configs/inside_finup.crt
   ssl_certificate_key: /Users/finup/GoglandProjects/src/k8s-webshell/configs/inside_finup.key
   jwt_secret: YouGuess
-  username: admin
-  password: 123
+  secret_key: richie

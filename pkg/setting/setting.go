@@ -20,8 +20,8 @@ var (
 	SslCertificateKey string
 	JwtSecret         string
 
-	UserName string
-	PassWord string
+	SecretKey string
+
 )
 
 type Config struct {
@@ -83,7 +83,7 @@ func (config *Config) LoadServer() {
 	SslCertificate = config.vp.GetString("server.ssl_certificate")
 	SslCertificateKey = config.vp.GetString("server.ssl_certificate_key")
 	JwtSecret = config.vp.GetString("server.jwt_secret")
-	UserName = config.vp.GetString("server.username")
-	PassWord = config.vp.GetString("server.password")
+	SecretKey = config.vp.GetString("server.secret_key")
+
 
 }
