@@ -38,9 +38,9 @@
 # kubectl apply -f k8s-webshell-deployment.yaml
 # kubectl apply -f k8s-webshell-svc.yaml
 ```
-修改`doc/demo/client/index.html` 中的以下内容的ip修改为容器的nodePort ip:
+修改`doc/demo/client/index.html` 中的以下内容的ip修改为容器的为域名(ssl证书为xx.com):
 ```javascript
-ws = new WebSocket("ws://10.10.152.39:30001/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName );
+ws = new WebSocket("wss://xx.com:30001/api/ws?" + "token=" + wsToken);
 ```
 然后打开index.html 就可以测试了
 
@@ -50,3 +50,30 @@ ws = new WebSocket("ws://10.10.152.39:30001/api/ws?" + "podNs=" + podNs + "&podN
 ```bash
 docker-compose -f docker-compose.yaml up k8s-webshell -d
 ```
+
+### 接口使用 
+调用`/auth`(POST方法)先获取token,参数如下:
+```json
+{
+	"secretKey":"ERkyNK2Q", 
+	"paasUser":"zhuruiqing",
+	"podNs":"richie",
+	"podName":"my-nginx-f9995bdb6-jtr5k",
+	"containerName":"my-nginx"
+	
+}
+```
+参数说明:
+```python
+secretKey  api认证secretKey
+paasUser   paas平台用户
+podNs      pod命名空间
+podName    pod名称
+containerName 容器名称
+
+```
+
+### web页面调用k8s-webshell websocket接口
+调用接口`/api/ws`其中token为 请求auth后获得的token:
+`ws = new WebSocket("wss://xx.com:30001/api/ws?" + "token=" + wsToken);`
+

@@ -10,9 +10,12 @@
 </head>
 <body>
 <form>
+    <!--
     namespace:<input type="text" id="podNs">
     podName:<input  type="text" id="podName">
     containerName:<input  type="text" id="containerName">
+    -->
+    wsToken:<input  type="text" id="wsToken">
     <input id="ssh" type="button" value="ssh">
 </form>
 <div id="terminal"></div>
@@ -34,12 +37,13 @@
         // 取得输入焦点
         term.focus();
         // 获取要连接的容器信息
-        var podNs = document.getElementById("podNs").value
-        var podName = document.getElementById("podName").value
-        var containerName = document.getElementById("containerName").value
+        // var podNs = document.getElementById("podNs").value
+        // var podName = document.getElementById("podName").value
+        // var containerName = document.getElementById("containerName").value
+        var wsToken = document.getElementById("wsToken").value
         // 连接websocket
         // ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName + "&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMTgxMjUsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.Dss1g9ZMflB_x0vkaK9GhRHYSZf2xek9VpfUeZaThL");
-        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:30001/api/ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzZWNyZXRrZXkiOiJFUmt5TksyUSIsIlBhYXNVc2VyIjoiemh1cnVpcWluZyIsInBvZE5zIjoicmljaGllIiwicG9kTmFtZSI6Im15LW5naW54LWY5OTk1YmRiNi1qdHI1ayIsImNvbnRhaW5lck5hbWUiOiJteS1uZ2lueCIsImV4cCI6MTU1NDMwNTIxNCwiaXNzIjoiazhzLXdlYnNoZWxsIn0.O2XkjFo_8aYeIOrXMgrYVw3zA-s4k7zbP3cvJC5MU54");
+        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:30001/api/ws?" + "token=" + wsToken);
         ws.onopen = function(event) {
             // ws.send(JSON.stringify({'podNs':podNs, 'podName':podName, 'containerName':containerName, 'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMjI2MjQsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.93CNsR7QeifmnV-MmPOYqp9n1jNaceLfyWujDSSFdMM'}))
             console.log("onopen")
