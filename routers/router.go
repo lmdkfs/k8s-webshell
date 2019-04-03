@@ -17,7 +17,7 @@ func InitRouter() *gin.Engine {
 	gin.SetMode(setting.RunMode)
 	route.Use(utils.GinRus(utils.Logger, time.RFC3339, false))
 	route.Use(gin.Recovery())
-	route.GET("/auth", api.GetAuth)
+	route.POST("/auth", api.GetAuth)
 	apiV1 := route.Group("/api")
 	apiV1.Use(jwt.JWT())
 	{

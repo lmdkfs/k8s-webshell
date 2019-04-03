@@ -30,5 +30,6 @@ spec:
             - name: WEBSHELL_SERVER_INCLUSTER
               value: "true"
 
+
           ports:
             - containerPort: 7777

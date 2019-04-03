@@ -1,7 +1,6 @@
 package jwt
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"k8s-webshell/pkg/e"
 	"k8s-webshell/pkg/utils"
@@ -17,11 +16,10 @@ func JWT() gin.HandlerFunc {
 		code = e.SUCCESS
 		token := c.Query("token")
 		if token == "" {
-			fmt.Println("token is empty")
+
 			code = e.INVALID_PARAMS
 		} else {
 			claims, err := utils.ParseToken(token)
-			fmt.Println("container name", claims.ContainerName)
 
 			if err != nil {
 				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
@@ -31,6 +29,7 @@ func JWT() gin.HandlerFunc {
 			c.Set("podNs", claims.PodNs)
 			c.Set("podName", claims.PodName)
 			c.Set("containerName", claims.ContainerName)
+			c.Set("paasUser", claims.PaasUser)
 
 		}
 
@@ -44,8 +43,6 @@ func JWT() gin.HandlerFunc {
 			return
 		}
 
-		utils.Logger.Info("jwt next")
-		fmt.Println("next>>>>")
 		c.Next()
 	}
 }

@@ -10,8 +10,8 @@ import (
 var jwtSecret = []byte(setting.JwtSecret)
 
 type Claims struct {
-	Username      string `json:"username"`
-	Password      string `json:"password`
+	SecretKey     string `json:"secretkey"`
+	PaasUser      string `json:"paasuser`
 	PodNs         string `json:"podNs"`
 	PodName       string `json:"podName"`
 	ContainerName string `json:"containerName"`
@@ -19,13 +19,13 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-func GenerateToken(username, password, podNs, podName, containerName string) (string, error) {
+func GenerateToken(secretKey, paasUser, podNs, podName, containerName string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		username,
-		password,
+		secretKey,
+		paasUser,
 		podNs,
 		podName,
 		containerName,
