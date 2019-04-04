@@ -118,9 +118,10 @@ func WsHandler(c *gin.Context) {
 	podNs = c.MustGet("podNs").(string)
 	podName = c.MustGet("podName").(string)
 	containerName = c.MustGet("containerName").(string)
-	fmt.Println(">>>>>", podNs, podName, containerName)
+	utils.Logger.Infof("nameSpaces:%s, podName: %s, containerName:%s", podNs, podName, containerName)
+	//fmt.Println(">>>>>", podNs, podName, containerName)
 
-	utils.Logger.Info("get kwargs  **")
+	//utils.Logger.Info("get kwargs  **")
 	// 得到websocket 长连接
 	if wsConn, err = ws.InitWebsocket(c.Writer, c.Request); err != nil {
 		utils.Logger.Info("up to ws error:", err)
@@ -133,7 +134,6 @@ func WsHandler(c *gin.Context) {
 
 	// 获取k8s rest client 配置
 	if restConf, err = common.GetRestConf(); err != nil {
-		fmt.Println("get kubeconfig error", err)
 		utils.Logger.Info("get kubeconfig error ", err)
 		goto END
 	}

@@ -16,10 +16,12 @@ func InitClient() (clientset *kubernetes.Clientset, err error) {
 		restConf *rest.Config
 	)
 	if restConf, err = GetRestConf(); err != nil {
+		utils.Logger.Info("GetRestConfig Client error:", err)
 		return
 	}
 
 	if clientset, err = kubernetes.NewForConfig(restConf); err != nil {
+		utils.Logger.Info("init k8s client error:", err)
 		goto END
 	}
 
