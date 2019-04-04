@@ -1,3 +1,5 @@
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-webshell
@@ -29,7 +31,12 @@ spec:
               value: "7777"
             - name: WEBSHELL_SERVER_INCLUSTER
               value: "true"
-
+            - name: WEBSHELL_SERVER_SSL_CERTIFICATE
+              value: /data/inside_finup.crt
+            - name: WEBSHELL_SERVER_SSL_CERTIFICATE_KEY
+              value: /data/inside_finup.key
+            - name: WEBSHELL_SERVER_SECRET_KEY
+              value: secret_key
 
           ports:
             - containerPort: 7777
