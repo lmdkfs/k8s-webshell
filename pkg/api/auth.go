@@ -54,6 +54,7 @@ func GetAuth(c *gin.Context) {
 			code = e.SUCCESS
 		}
 	} else {
+		code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 		utils.Logger.Info("username or password invalid")
 	}
 
