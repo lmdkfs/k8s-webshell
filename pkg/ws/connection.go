@@ -7,7 +7,6 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
-
 )
 
 var wsUpgrader = websocket.Upgrader{
@@ -46,7 +45,7 @@ func (wsConn *WsConnection) wsReadLoop() {
 
 	for {
 		if msgType, data, err = wsConn.wsSocket.ReadMessage(); err != nil {
-			utils.Logger.Info("读取协程错误:",err )
+			utils.Logger.Info("读取协程错误:", err)
 			goto ERROR
 		}
 
@@ -54,6 +53,7 @@ func (wsConn *WsConnection) wsReadLoop() {
 			MessageType: msgType,
 			Data:        data,
 		}
+
 		select {
 		case wsConn.inChan <- msg:
 		case <-wsConn.closeChan:
@@ -79,7 +79,7 @@ func (wsConn *WsConnection) wsWriteLoop() {
 		select {
 		case msg = <-wsConn.outChan:
 			if err = wsConn.wsSocket.WriteMessage(msg.MessageType, msg.Data); err != nil {
-				utils.Logger.Info("发送错误:",err )
+				utils.Logger.Info("发送错误:", err)
 				goto ERROR
 			}
 		case <-wsConn.closeChan:
@@ -100,7 +100,7 @@ func InitWebsocket(resp http.ResponseWriter, req *http.Request) (wsConn *WsConne
 
 	// 应答客户端告知升级连接为websocket
 	if wsSocket, err = wsUpgrader.Upgrade(resp, req, nil); err != nil {
-		utils.Logger.Info("update to ws error:",err )
+		utils.Logger.Info("update to ws error:", err)
 		return
 	}
 

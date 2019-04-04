@@ -1,21 +1,17 @@
 package api
 
 import (
-	"fmt"
-
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"k8s-webshell/pkg/common"
 	"k8s-webshell/pkg/utils"
 	"k8s-webshell/pkg/ws"
-
 	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/remotecommand"
-
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 )
 
 var (
@@ -70,7 +66,6 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	if msg, err = handler.wsConn.WsRead(); err != nil {
 		return
 	}
-
 	// 解析客户端请求
 	if err = json.Unmarshal(msg.Data, &xtermMsg); err != nil {
 		return
@@ -83,7 +78,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	} else if xtermMsg.MsgType == "input" { // web ssh 终端输入了字符
 		// copy 到p数组中
 		size = len(xtermMsg.Input)
-		fmt.Println("webshell输入:", xtermMsg.Input)
+		utils.Logger.Info("webShell Input:", xtermMsg.Input)
 		copy(p, xtermMsg.Input)
 
 	}
@@ -154,9 +149,10 @@ func WsHandler(c *gin.Context) {
 	//utils.Logger.Info("end k8s post")
 	// 创建到容器的连接
 	if executor, err = remotecommand.NewSPDYExecutor(restConf, "POST", sshReq.URL()); err != nil {
+		utils.Logger.Info("创建到容器的连接失败:", err)
 		goto END
 	}
-	wsConn.WsRead()
+
 	// 配置与容器之间的数据流处理回调
 	handler = &streamHandler{wsConn: wsConn, resizeEvent: make(chan remotecommand.TerminalSize)}
 	if err = executor.Stream(remotecommand.StreamOptions{
