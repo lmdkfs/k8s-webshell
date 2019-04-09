@@ -43,10 +43,12 @@
         var wsToken = document.getElementById("wsToken").value
         // 连接websocket
         // ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?" + "podNs=" + podNs + "&podName=" + podName + "&containerName=" + containerName + "&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMTgxMjUsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.Dss1g9ZMflB_x0vkaK9GhRHYSZf2xek9VpfUeZaThL");
-        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:7777/api/ws?" + "token=" + wsToken);
+        ws = new WebSocket("wss://k8s-webshell.finupgroup.com:30001/api/ws?" + "token=" + wsToken);
         ws.onopen = function(event) {
             // ws.send(JSON.stringify({'podNs':podNs, 'podName':podName, 'containerName':containerName, 'token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiUGFzc3dvcmQiOiIxMjMiLCJleHAiOjE1NTQxMjI2MjQsImlzcyI6Ims4cy13ZWJzaGVsbCJ9.93CNsR7QeifmnV-MmPOYqp9n1jNaceLfyWujDSSFdMM'}))
-            console.log("onopen")
+          console.log("onopen")
+          var msg = {type: "input", input: '\r'};
+          ws.send(JSON.stringify(msg))
         }
         ws.onclose = function(event) {
             console.log("onclose")
