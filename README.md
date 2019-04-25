@@ -48,7 +48,7 @@ ws = new WebSocket("wss://xx.com:30001/api/ws?" + "token=" + wsToken);
 
 在项目根目录下执行:
 ```bash
-docker-compose -f docker-compose.yaml up k8s-webshell -d
+docker-compose -f docker-compose.yaml up -d k8s-webshell 
 ```
 
 ### 接口使用 
