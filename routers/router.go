@@ -3,11 +3,12 @@ package routers
 import (
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"k8s-webshell/middleware/jwt"
 	"k8s-webshell/pkg/api"
 	"k8s-webshell/pkg/setting"
 	"k8s-webshell/pkg/utils"
+
+	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() *gin.Engine {
