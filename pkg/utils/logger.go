@@ -21,6 +21,7 @@ type loggerEntryWithfields interface {
 
 func init() {
 	Logger = logrus.New()
+	// 显示代码行号
 	Logger.SetReportCaller(true)
 	// 禁止终端输出
 	//src, err := os.OpenFile(os.DevNull, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
