@@ -50,7 +50,6 @@ func (wsConn *WsConnection) wsReadLoop() {
 			utils.Logger.Info("读取协程错误:", err)
 			goto ERROR
 		}
-		//fmt.Print("read from webterminal:", string(data))
 
 		msg = &WsMessage{
 			MessageType: msgType,
