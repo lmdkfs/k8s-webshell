@@ -85,7 +85,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 // executor 回调想web 输出
 func (handler *streamHandler) Write(p []byte) (size int, err error) {
 	size = len(p)
-	copy := append(make([]byte, 0, size), p...)
+	copy := append(make([]byte, 0, size), p...) // 解决 发送数据丢失的问题
 	err = handler.wsConn.WsWrite(websocket.BinaryMessage, copy)
 	return
 }

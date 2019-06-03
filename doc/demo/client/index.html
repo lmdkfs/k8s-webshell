@@ -30,6 +30,7 @@
 
 
 
+
     class ConvertHelper {
         constructor() {
             this.buf = null;
@@ -78,34 +79,24 @@
             } else {
                 this.isChunk = false;
             }
-
+            // console.log(`buf.byteLength: ${buf.byteLength}`);
+            // console.log(buf);
             if (this.isChunk) {
                 if (!this.isStartValid(buf)) {
-                    buf = this.concat(this.buf, buf);
-                    this.buf = null;
+                    // buf = this.concat(this.buf, buf);
+                    buf = this.getBufAll(buf);
                 }
                 // console.log(buf);
                 // console.log(this.isStartValid(buf));
                 // console.log(this.isEndValid(buf));
                 // console.log(this.getLastInValidPos(buf));
-
                 if (!this.isEndValid(buf)) {
-                    var pos = this.getLastInValidPos(buf);
-                    if (pos < 0) {
-                        cb(null, this.forceUtf8Slice(buf.subarray(0, pos)));
-                        this.buf = buf.subarray(pos);
-                    } else {
-                        cb(null, this.forceUtf8Slice(buf));
-                        this.buf = null;
-                    }
+                    this.bufList.push(buf);
                 } else {
-                    cb(null, this.forceUtf8Slice(buf));
-                    this.buf = null;
+                    cb(null, this.forceUtf8Slice(this.getBufAll(buf)));
                 }
             } else {
-                buf = this.concat(this.buf, buf);
-                this.buf = null;
-                cb(null, this.forceUtf8Slice(buf));
+                cb(null, this.forceUtf8Slice(this.getBufAll(buf)));
             }
         }
 
@@ -135,21 +126,10 @@
             if (buf instanceof ArrayBuffer) {
                 buf = new Uint8Array(buf);
             }
-            if (buf.byteLength >= 4 * 1024) {
-                this.isChunk = true;
-            } else {
-                this.isChunk = false;
-            }
-
-            if (!this.isChunk) {
+            if (this.isEndValid(buf)) {
                 cb(null, this.forceUtf8Slice(this.getBufAll(buf)));
-                this.bufList.length = 0;
             } else {
-                if (this.isEndValid(buf)) {
-                    cb(null, this.forceUtf8Slice(this.getBufAll(buf)));
-                } else {
-                    this.bufList.push(buf);
-                }
+                this.bufList.push(buf);
             }
         }
 
