@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"k8s-webshell/pkg/common"
@@ -46,11 +45,7 @@ type xtermMessage struct {
 	Cols    uint16 `json:"cols"`  // msgtype=resize情况下使用
 }
 
-//type PodInfo struct {
-//	podNs         string `form:"podNs"`
-//	podName       string `form:"podName"`
-//	containerName string `form:"containerName"`
-//}
+
 
 // executor 回调获取web是否resize
 func (handler *streamHandler) Next() (size *remotecommand.TerminalSize) {
@@ -82,7 +77,6 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	} else if xtermMsg.MsgType == "input" { // web ssh 终端输入了字符
 		// copy 到p数组中
 		size = len(xtermMsg.Input)
-		//utils.Logger.Info("webShell Input:", xtermMsg.Input)
 		copy(p, xtermMsg.Input)
 
 	}
@@ -93,9 +87,8 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 // executor 回调想web 输出
 func (handler *streamHandler) Write(p []byte) (size int, err error) {
 	size = len(p)
-	//err = handler.wsConn.WsWrite(websocket.TextMessage, p)
-	fmt.Println("send to webterminal:", string(p), len(p))
-	err = handler.wsConn.WsWrite(websocket.BinaryMessage, p)
+	copy := append(make([]byte, 0, size), p...)
+	err = handler.wsConn.WsWrite(websocket.BinaryMessage, copy)
 	return
 }
 func WsHandler(c *gin.Context) {
