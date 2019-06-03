@@ -45,8 +45,6 @@ type xtermMessage struct {
 	Cols    uint16 `json:"cols"`  // msgtype=resize情况下使用
 }
 
-
-
 // executor 回调获取web是否resize
 func (handler *streamHandler) Next() (size *remotecommand.TerminalSize) {
 	ret := <-handler.resizeEvent
@@ -105,35 +103,23 @@ func WsHandler(c *gin.Context) {
 		paasUser      string
 	)
 
-	// 解析GET 参数
-
-	//podNs = c.Query("podNs")
-	//podName = c.Query("podName")
-	//containerName = c.Query("containerName")
 	podNs = c.MustGet("podNs").(string)
 	podName = c.MustGet("podName").(string)
 	containerName = c.MustGet("containerName").(string)
 	paasUser = c.MustGet("paasUser").(string)
 	utils.Logger.Infof("nameSpaces:%s, podName: %s, containerName:%s", podNs, podName, containerName)
-	//fmt.Println(">>>>>", podNs, podName, containerName)
 
-	//utils.Logger.Info("get kwargs  **")
 	// 得到websocket 长连接
 	if wsConn, err = ws.InitWebsocket(c.Writer, c.Request); err != nil {
 		utils.Logger.Info("up to ws error:", err)
 		return
 	}
 
-	//podName = "my-nginx-f9995bdb6-bb8sr"
-	//podNs = "default"
-	//containerName = "my-nginx"
-
 	// 获取k8s rest client 配置
 	if restConf, err = common.GetRestConf(); err != nil {
 		utils.Logger.Info("get kubeconfig error ", err)
 		goto END
 	}
-	//utils.Logger.Info("start to k8s post", podName, podNs, containerName)
 	sshReq = ClientSet.CoreV1().RESTClient().Post().
 		Resource("pods").
 		Name(podName).
@@ -147,7 +133,6 @@ func WsHandler(c *gin.Context) {
 			Stderr:    true,
 			TTY:       true,
 		}, scheme.ParameterCodec)
-	//utils.Logger.Info("end k8s post")
 	// 创建到容器的连接
 	if executor, err = remotecommand.NewSPDYExecutor(restConf, "POST", sshReq.URL()); err != nil {
 		utils.Logger.Info("创建到容器的连接失败:", err)
