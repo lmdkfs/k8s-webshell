@@ -10,6 +10,8 @@ import (
 )
 
 var wsUpgrader = websocket.Upgrader{
+	ReadBufferSize: 16384,
+	WriteBufferSize: 16384,
 	// 允许所有CORS跨域访问
 	CheckOrigin: func(r *http.Request) bool {
 		return true
@@ -48,6 +50,7 @@ func (wsConn *WsConnection) wsReadLoop() {
 			utils.Logger.Info("读取协程错误:", err)
 			goto ERROR
 		}
+		//fmt.Print("read from webterminal:", string(data))
 
 		msg = &WsMessage{
 			MessageType: msgType,
