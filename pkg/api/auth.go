@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"k8s-webshell/pkg/e"
 	"k8s-webshell/pkg/setting"
@@ -33,12 +32,12 @@ func GetAuth(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(">>>", apiAuth.SecretKey,
-		apiAuth.SecretKey,
-		apiAuth.PaasUser,
-		apiAuth.PodNs,
-		apiAuth.PodName,
-		apiAuth.ContainerName)
+	//fmt.Println(">>>", apiAuth.SecretKey,
+	//	apiAuth.SecretKey,
+	//	apiAuth.PaasUser,
+	//	apiAuth.PodNs,
+	//	apiAuth.PodName,
+	//	apiAuth.ContainerName)
 
 	if apiAuth.SecretKey == setting.SecretKey {
 		token, err := utils.GenerateToken(
