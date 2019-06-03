@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"k8s-webshell/pkg/common"
@@ -32,6 +33,9 @@ func init() {
 type streamHandler struct {
 	wsConn      *ws.WsConnection
 	resizeEvent chan remotecommand.TerminalSize
+	podName     *string
+	podNs       *string
+	paasUser    *string
 }
 
 // web终端发来的包
@@ -63,6 +67,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 		xtermMsg xtermMessage
 	)
 	// 读web发来的输入
+
 	if msg, err = handler.wsConn.WsRead(); err != nil {
 		return
 	}
@@ -70,7 +75,6 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	if err = json.Unmarshal(msg.Data, &xtermMsg); err != nil {
 		return
 	}
-
 	// web ssh 调整了终端大小
 	if xtermMsg.MsgType == "resize" {
 		// 放到channel里, 等remotecommand executor 调用我们的Next取走
@@ -78,7 +82,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	} else if xtermMsg.MsgType == "input" { // web ssh 终端输入了字符
 		// copy 到p数组中
 		size = len(xtermMsg.Input)
-		utils.Logger.Info("webShell Input:", xtermMsg.Input)
+		//utils.Logger.Info("webShell Input:", xtermMsg.Input)
 		copy(p, xtermMsg.Input)
 
 	}
@@ -89,7 +93,9 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 // executor 回调想web 输出
 func (handler *streamHandler) Write(p []byte) (size int, err error) {
 	size = len(p)
-	err = handler.wsConn.WsWrite(websocket.TextMessage, p)
+	//err = handler.wsConn.WsWrite(websocket.TextMessage, p)
+	fmt.Println("send to webterminal:", string(p), len(p))
+	err = handler.wsConn.WsWrite(websocket.BinaryMessage, p)
 	return
 }
 func WsHandler(c *gin.Context) {
@@ -103,6 +109,7 @@ func WsHandler(c *gin.Context) {
 		executor      remotecommand.Executor
 		handler       *streamHandler
 		err           error
+		paasUser      string
 	)
 
 	// 解析GET 参数
@@ -113,6 +120,7 @@ func WsHandler(c *gin.Context) {
 	podNs = c.MustGet("podNs").(string)
 	podName = c.MustGet("podName").(string)
 	containerName = c.MustGet("containerName").(string)
+	paasUser = c.MustGet("paasUser").(string)
 	utils.Logger.Infof("nameSpaces:%s, podName: %s, containerName:%s", podNs, podName, containerName)
 	//fmt.Println(">>>>>", podNs, podName, containerName)
 
@@ -154,7 +162,7 @@ func WsHandler(c *gin.Context) {
 	}
 
 	// 配置与容器之间的数据流处理回调
-	handler = &streamHandler{wsConn: wsConn, resizeEvent: make(chan remotecommand.TerminalSize)}
+	handler = &streamHandler{wsConn: wsConn, resizeEvent: make(chan remotecommand.TerminalSize), podName: &podName, podNs: &podNs, paasUser: &paasUser}
 	if err = executor.Stream(remotecommand.StreamOptions{
 		Stdin:             handler,
 		Stdout:            handler,
