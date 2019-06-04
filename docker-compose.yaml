@@ -23,7 +23,7 @@ services:
     build: 
       context: .
       #dockerfile: Dockerfile
-    image: harbor.finupgroup.com/galaxy/k8s-webshell:v1 
+    image: harbor.finupgroup.com/galaxy/k8s-webshell:v1.1
     ports:
       - "30001:7777"
     environment:
