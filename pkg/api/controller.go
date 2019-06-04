@@ -68,6 +68,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 	if err = json.Unmarshal(msg.Data, &xtermMsg); err != nil {
 		return
 	}
+
 	// web ssh 调整了终端大小
 	if xtermMsg.MsgType == "resize" {
 		// 放到channel里, 等remotecommand executor 调用我们的Next取走
@@ -78,6 +79,7 @@ func (handler *streamHandler) Read(p []byte) (size int, err error) {
 		copy(p, xtermMsg.Input)
 
 	}
+
 	return
 
 }
