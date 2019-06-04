@@ -94,6 +94,7 @@ func GinRus(logger loggerEntryWithfields, timeFormat string, utc bool) gin.Handl
 		}
 
 		entry := logger.WithFields(logrus.Fields{
+			"serviceName": "k8s-webshell",
 			"status":     c.Writer.Status(),
 			"method":     c.Request.Method,
 			"path":       requestPath,

@@ -10,7 +10,7 @@ import (
 )
 
 var wsUpgrader = websocket.Upgrader{
-	ReadBufferSize: 16384,
+	ReadBufferSize:  16384,
 	WriteBufferSize: 16384,
 	// 允许所有CORS跨域访问
 	CheckOrigin: func(r *http.Request) bool {
@@ -55,7 +55,6 @@ func (wsConn *WsConnection) wsReadLoop() {
 			MessageType: msgType,
 			Data:        data,
 		}
-
 		select {
 		case wsConn.inChan <- msg:
 		case <-wsConn.closeChan:
