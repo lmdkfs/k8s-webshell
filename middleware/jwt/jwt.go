@@ -1,11 +1,11 @@
 package jwt
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"k8s-webshell/pkg/e"
 	"k8s-webshell/pkg/utils"
 	"net/http"
-	"time"
 )
 
 func JWT() gin.HandlerFunc {
@@ -15,6 +15,7 @@ func JWT() gin.HandlerFunc {
 
 		code = e.SUCCESS
 		token := c.Query("token")
+
 		if token == "" {
 
 			code = e.INVALID_PARAMS
@@ -22,17 +23,25 @@ func JWT() gin.HandlerFunc {
 			claims, err := utils.ParseToken(token)
 
 			if err != nil {
-				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
-			} else if time.Now().Unix() > claims.ExpiresAt {
-				code = e.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
+
+				switch err.(*jwt.ValidationError).Errors {
+
+				case jwt.ValidationErrorExpired:
+					code = e.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
+				default:
+					code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
+
+				}
+
+			} else {
+				c.Set("podNs", claims.PodNs)
+				c.Set("podName", claims.PodName)
+				c.Set("containerName", claims.ContainerName)
+				c.Set("paasUser", claims.PaasUser)
+
 			}
-			c.Set("podNs", claims.PodNs)
-			c.Set("podName", claims.PodName)
-			c.Set("containerName", claims.ContainerName)
-			c.Set("paasUser", claims.PaasUser)
 
 		}
-
 		if code != e.SUCCESS {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": code,

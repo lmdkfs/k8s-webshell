@@ -21,7 +21,7 @@ type Claims struct {
 
 func GenerateToken(secretKey, paasUser, podNs, podName, containerName string) (string, error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(3 * time.Hour)
+	expireTime := nowTime.Add(20 * time.Minute)
 
 	claims := Claims{
 		secretKey,
