@@ -125,6 +125,7 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 			"PassUser":  handler.paasUser,
 			"PodName":   handler.podName,
 			"NameSpace": handler.podNs,
+			"serviceName":"k8s-webshell",
 			"command":   "clear screen",
 		}).Info("record input")
 
@@ -135,10 +136,11 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 		}
 		if len(handler.logBuff.String()) > 0 {
 			utils.Logger.WithFields(logrus.Fields{
-				"PassUser":  handler.paasUser,
-				"PodName":   handler.podName,
-				"NameSpace": handler.podNs,
-				"command":   handler.logBuff.String(),
+				"PassUser":    handler.paasUser,
+				"PodName":     handler.podName,
+				"NameSpace":   handler.podNs,
+				"serviceName": "k8s-webshell",
+				"command":     handler.logBuff.String(),
 			}).Info("record input")
 		}
 
@@ -154,10 +156,11 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 
 	case []byte(*inputString)[n] == 3:
 		utils.Logger.WithFields(logrus.Fields{
-			"PassUser":  handler.paasUser,
-			"PodName":   handler.podName,
-			"NameSpace": handler.podNs,
-			"command":   "ctrl + c",
+			"PassUser":    handler.paasUser,
+			"PodName":     handler.podName,
+			"NameSpace":   handler.podNs,
+			"serviceName": "k8s-webshell",
+			"command":     "ctrl + c",
 		}).Info("record input")
 		handler.logBuff.Reset()
 
