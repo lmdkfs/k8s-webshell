@@ -126,6 +126,7 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 			"PodName":   handler.podName,
 			"NameSpace": handler.podNs,
 			"serviceName":"k8s-webshell",
+			"short_message":"k8s-webshell",
 			"command":   "clear screen",
 		}).Info("record input")
 
@@ -140,6 +141,7 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 				"PodName":     handler.podName,
 				"NameSpace":   handler.podNs,
 				"serviceName": "k8s-webshell",
+				"short_message":"k8s-webshell",
 				"command":     handler.logBuff.String(),
 			}).Info("record input")
 		}
@@ -160,6 +162,7 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 			"PodName":     handler.podName,
 			"NameSpace":   handler.podNs,
 			"serviceName": "k8s-webshell",
+			"short_message":"k8s-webshell",
 			"command":     "ctrl + c",
 		}).Info("record input")
 		handler.logBuff.Reset()
