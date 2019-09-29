@@ -10,8 +10,8 @@ services:
     volumes:
       - ./cmd:/go/src/k8s-webshell/cmd
       - ./configs:/go/src/k8s-webshell/configs
-      - ./configs/inside_finup.crt:/go/src/k8s-webshell/configs/inside_finup.crt
-      - ./configs/inside_finup.key:/go/src/k8s-webshell/configs/inside_finup.key
+      - ./configs/privkey.pem:/go/src/k8s-webshell/configs/privkey.pem
+      - ./configs/fullchain.pem:/go/src/k8s-webshell/configs/fullchain.pem
       - ./pkg:/go/src/k8s-webshell/pkg
       - ./middleware:/go/src/k8s-webshell/middleware
       - ./routers:/go/src/k8s-webshell/routers
@@ -23,7 +23,7 @@ services:
     build: 
       context: .
       #dockerfile: Dockerfile
-    image: harbor.finupgroup.com/galaxy/k8s-webshell:v1.2
+    image: harbor.renmaitech.cn/galaxy/k8s-webshell:v1.2
     ports:
       - "30001:7777"
     environment:
@@ -35,8 +35,8 @@ services:
       - WEBSHELL_SERVER_INCLUSTER=false
       - WEBSHELL_SERVER_JWT_SECRET=Youguess
       - WEBSHELL_SERVER_SECRET_KEY=ERkyNK2Q
-      - WEBSHELL_SERVER_SSL_CERTIFICATE=/data/inside_finup.crt
-      - WEBSHELL_SERVER_SSL_CERTIFICATE_KEY=/data/inside_finup.key
+      - WEBSHELL_SERVER_SSL_CERTIFICATE=/data/privkey.pem
+      - WEBSHELL_SERVER_SSL_CERTIFICATE_KEY=/data/fullchain.pem
     volumes:
       - ./configs/admin.conf:/data/admin.conf
     command: ["./k8s-webshell"]    

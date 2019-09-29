@@ -109,7 +109,7 @@ func (handler *streamHandler) RecordCommand(inputString *string) {
 	rightMoveCursor, _ := regexp.MatchString(`\s?\[C`, *inputString)
 	switch {
 	case invalidChart:
-		utils.Logger.Info("enter >> :", []rune(*inputString))
+		//utils.Logger.Info("enter >> :", []rune(*inputString))
 
 	case leftMoveCursor:
 		cmdLens := len([]rune(handler.logBuff.String()))
