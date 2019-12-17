@@ -3,6 +3,13 @@ server:
   run_mode: debug
   logpath: /Users/finup/GoglandProjects/src/k8s-webshell
   logname: webshell.log
-  kubeconfig: /Users/finup/GoglandProjects/src/k8s-webshell/configs/admin.conf
+  certificate: /Users/finup/GolandProjects/src/k8s-webshell/configs/inside_finup.crt
+  certificatekey: /Users/finup/GolandProjects/src/k8s-webshell/configs/inside_finup.key
+  jwtsecret: YouGuess
+  secretkey: richie
+
+k8s:
+  kubeconfig: /Users/finup/finupdata/go-projects/k8s-webshell/configs/admin.conf
+  incluster: false
 
 

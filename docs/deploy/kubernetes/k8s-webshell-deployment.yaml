@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-webshell
+  namespace:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8s-webshell
+  template:
+    metadata:
+      labels:
+        app: k8s-webshell
+    spec:
+      serviceAccountName: k8s-webshell
+      automountServiceAccountToken: true
+      containers:
+        - name: k8s-webshell
+          image: harbor.finupgroup.com/galaxy/k8s-webshell:v1
+          command: ["./k8s-webshell", "--config", "/etc/k8s-webshell/config.yaml"]
+          imagePullPolicy: Always
+          volumeMounts:
+          - name: k8s-webshell-config
+            mountPath: /etc/k8s-webshell/config.yaml
+            subPath: config.yaml
+          - name: k8s-webshell-ssl
+            mountPath: /etc/k8s-webshell/ssl
+            readOnly: true
+          ports:
+            - containerPort: 7777
+      volumes:
+        - name: k8s-webshell-config
+          configMap:
+            name: k8s-webshell
+        - name: k8s-webshell-ssl
+            secret:
+              secretName: k8s-webshell-ssl
+

@@ -1,0 +1,21 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: k8s-webshell
+  namespaces: production-k8s-webshell # 根据自身情况进行修改
+data:
+  config.yaml: |
+    server:
+      port: 7777
+      run_mode: debug
+      logpath: /var/log/app
+      logname: webshell.log
+      certificate: /etc/k8s-webshell/ssl/webshell.crt
+      certificatekey: /etc/k8s-webshell/ssl/webshell.key
+      jwtsecret: YouGuess
+      secretkey: richie
+
+    k8s:
+      kubeconfig: /etc/k8s-webshell/admin.conf
+      incluster: true
