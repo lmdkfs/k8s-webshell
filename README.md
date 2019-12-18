@@ -18,14 +18,10 @@
     # make docker 
     ```  
 
-- push 镜像:  
-   ```bash
-   docker-compose push k8s-webshell
-   ```
-
 
 ### 部署方式有2种:
 - kubernetes 部署(k8s 集群内 incluster 模式)到集群当中
+  
 - docker-compose 部署(k8s集群外部署) 
 
 ### kubernetes 部署 k8s-webshell
@@ -35,6 +31,7 @@
 ```bash
 # kubectl apply -f k8s-webshell-sa.yaml
 # kubectl apply -f k8s-webshell-clusterrole.yaml
+# kubectl apply -f k8s-webshell-secret.yaml 
 # kubectl apply -f k8s-webshell-clusterrolebinding.yaml
 # kubectl apply -f k8s-webshell-deployment.yaml
 # kubectl apply -f k8s-webshell-svc.yaml

@@ -1,0 +1,26 @@
+version: "3"
+services:
+  k8s-webshell:
+    build:
+      context: .
+    image: k8s-webshell:1.3
+    command: ["./k8s-webshell", "--config", "/etc/k8s-webshell/config.yaml"]
+
+    ports:
+      - "30001:777"
+    environment:
+      - WEBSHELL_SERVER_RUN_MODE=debug
+      - WEBSHELL_SERVER_LOGPATH=/var/logs
+      - WEBSHELL_SERVER_PORT=7777
+      - WEBSHELL_SERVER_LOGNAME=webshell.log
+      - WEBSHELL_K8S_KUBECONFIG=/etc/k8s-webshell/admin.conf
+      - WEBSHELL_SERVER_CERTIFICATE=/etc/k8s-webshell/webshell.crt
+      - WEBSHELL_SERVER_CERTIFICATEKEY=/etc/k8s-webshell/webshell.key
+      - WEBSHELL_K8S_INCLUSTER=false
+    volumes:
+      - "./configs/config.yaml:/etc/k8s-webshell/config.yaml"
+      - "./configs/admin.conf:/etc/k8s-webshell/admin.conf"
+      - "./configs/webshell.crt:/etc/k8s-webshell/webshell.crt"
+      - "./configs/webshell.key:/etc/k8s-webshell/webshell.key"
+
+
