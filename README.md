@@ -53,7 +53,7 @@ docker-compose -f docker-compose.yaml up -d k8s-webshell
 调用`/auth`(POST方法)先获取token,参数如下:
 ```json
 {
-	"secretKey":"ERkyNK2Q", 
+	"secretKey":"xxxxx", 
 	"paasUser":"zhuruiqing",
 	"podNs":"richie",
 	"podName":"my-nginx-f9995bdb6-jtr5k",
