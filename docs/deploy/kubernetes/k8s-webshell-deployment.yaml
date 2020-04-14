@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: k8s-webshell
-  namespace:
+  namespace: k8s-webshell
 spec:
   replicas: 1
   selector:
@@ -18,7 +18,7 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: k8s-webshell
-          image: harbor.finupgroup.com/galaxy/k8s-webshell:v1
+          image: k8s-webshell:v1.3
           command: ["./k8s-webshell", "--config", "/etc/k8s-webshell/config.yaml"]
           imagePullPolicy: Always
           volumeMounts:
@@ -35,6 +35,6 @@ spec:
           configMap:
             name: k8s-webshell
         - name: k8s-webshell-ssl
-            secret:
-              secretName: k8s-webshell-ssl
+          secret:
+            secretName: k8s-webshell-ssl
 

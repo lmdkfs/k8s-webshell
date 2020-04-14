@@ -3,7 +3,7 @@
   kind: Service
   metadata:
     name: k8s-webshell
-    namespace: production-k8s-webshell # 根据自己的情况进行修改
+    namespace: k8s-webshell # 根据自己的情况进行修改
   spec:
     selector:
       app: k8s-webshell

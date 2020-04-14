@@ -3,7 +3,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: k8s-webshell
-  namespaces: production-k8s-webshell # 根据自身情况进行修改
+  namespace: k8s-webshell # 根据自身情况进行修改
 data:
   config.yaml: |
     server:

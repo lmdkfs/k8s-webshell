@@ -1,15 +1,15 @@
 server:
   port: 7777
   run_mode: debug
-  logpath: /Users/finup/GoglandProjects/src/k8s-webshell
+  logpath: /tmp/k8s-webshell
   logname: webshell.log
-  certificate: /Users/finup/GolandProjects/src/k8s-webshell/configs/inside_finup.crt
-  certificatekey: /Users/finup/GolandProjects/src/k8s-webshell/configs/inside_finup.key
+  certificate: /Users/richie/data/certbot-data/etc/letsencrypt/live/webshell-test.zrq.org.cn-0001/fullchain.pem
+  certificatekey: /Users/richie/data/certbot-data/etc/letsencrypt/live/webshell-test.zrq.org.cn-0001/privkey.pem
   jwtsecret: YouGuess
   secretkey: richie
 
 k8s:
-  kubeconfig: /Users/finup/finupdata/go-projects/k8s-webshell/configs/admin.conf
+  kubeconfig: /Users/richie/.kube/config
   incluster: false
 
 
