@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
-	github.com/gin-gonic/gin v1.5.0
+	github.com/gin-gonic/gin v1.7.0
 	github.com/googleapis/gnostic v0.3.1 // indirect
 	github.com/gorilla/websocket v1.4.0
 	github.com/imdario/mergo v0.3.8 // indirect
@@ -23,6 +23,5 @@ require (
 	github.com/tebeka/strftime v0.1.3 // indirect
 	k8s.io/api v0.17.0
 	k8s.io/client-go v0.17.0
-
 	k8s.io/utils v0.0.0-20191114200735-6ca3b61696b6 // indirect
 )
