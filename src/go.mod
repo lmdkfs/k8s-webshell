@@ -14,15 +14,14 @@ require (
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
 	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/pkg/errors v0.8.0
-	github.com/prometheus/client_golang v0.9.3
+	github.com/pkg/errors v0.9.1
+	github.com/prometheus/client_golang v1.11.1
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
-	github.com/sirupsen/logrus v1.2.0
+	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/viper v1.6.1
 	github.com/tebeka/strftime v0.1.3 // indirect
 	k8s.io/api v0.17.0
 	k8s.io/client-go v0.17.0
-
 	k8s.io/utils v0.0.0-20191114200735-6ca3b61696b6 // indirect
 )
